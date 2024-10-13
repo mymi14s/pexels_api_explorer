@@ -10,9 +10,12 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository and build
+      - name: Checkout repository
         id: checkout_repository
         uses: actions/checkout@v4
+      
+      - name: Build Docker Image
+        id: build_docker_image
         run: |
           APP_VERSION=$(grep -Po 'version="\K[^\"]+' src/main.py)
           docker build -t mymi14s/pexels-apis-explorer:$APP_VERSION .
