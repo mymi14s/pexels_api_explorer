@@ -18,6 +18,7 @@ jobs:
         id: build_docker_image
         run: |
           APP_VERSION=$(grep -Po 'version="\K[^\"]+' src/main.py)
+          echo "APP_VERSION=${APP_VERSION}" >> $GITHUB_ENV
           docker build -t mymi14s/pexels-apis-explorer:$APP_VERSION .
           docker build -t mymi14s/pexels-apis-explorer:latest .
           docker run -d --name pexels-explorer -p8000:8000 mymi14s/pexels-apis-explorer:latest
@@ -45,5 +46,5 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: mymi14s/pexels-apis-explorer:$APP_VERSION,mymi14s/pexels-apis-explorer:latest
+          tags: mymi14s/pexels-apis-explorer:${{ env.APP_VERSION }},mymi14s/pexels-apis-explorer:latest
 
