@@ -1,0 +1,5 @@
+fastapi==0.115.2
+fastapi-cli==0.0.5
+pexels-apis==0.0.5
+pyjwt==2.9.0
+requests

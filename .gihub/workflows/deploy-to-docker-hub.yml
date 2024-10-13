@@ -1,0 +1,39 @@
+stages:
+  - build
+  - test
+  - deploy
+
+variables:
+  DOCKER_IMAGE: mymi14s/pexels-apis-explorer
+
+build:
+  stage: build
+  script:
+    - VERSION=$(python -c "import src.main as main; print(main.__version__)")
+    - docker build --target build -t $DOCKER_IMAGE:$VERSION -t $DOCKER_IMAGE:latest .
+
+test:
+  stage: test
+  script:
+    - docker build --target test -t $DOCKER_IMAGE:test .
+    - docker run --rm $DOCKER_IMAGE:test pytest
+
+deploy_production_test:
+  stage: deploy
+  script:
+    - VERSION=$(python -c "import src.main as main; print(main.__version__)")
+    - docker build --target production -t $DOCKER_IMAGE:$VERSION -t $DOCKER_IMAGE:latest .
+    - docker run -d --name pexels-explorer -p8000:8000 $DOCKER_IMAGE:latest
+  only:
+    - production
+
+deploy_production:
+  stage: deploy
+  script:
+    - VERSION=$(python -c "import src.main as main; print(main.__version__)")
+    - docker build --target production -t $DOCKER_IMAGE:$VERSION -t $DOCKER_IMAGE:latest .
+    - docker run -d --name pexels-explorer -p8000:8000 $DOCKER_IMAGE:latest
+    - docker push $DOCKER_IMAGE:latest
+    - docker push $DOCKER_IMAGE:$VERSION
+  only:
+    - production
