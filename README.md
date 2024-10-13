@@ -1,5 +1,5 @@
 
-Pexels API Explorer - Version 0.0.1
+Pexels API Explorer
 -------------------------
 
 This Pexels Fast API provides easy access to the Pexels API, allowing you to search and retrieve high-quality photos and videos for your projects.
@@ -25,7 +25,7 @@ bash
 
 
 `docker pull mymi14s/pexels_api_explorer:latest `
-`docker run -d --name pexels_explorer -p8000:8000 mymi14s/pexels-api-explorer:latest`
+`docker run -d --name pexels-explorer -p8000:8000 mymi14s/pexels-apis-explorer:latest`
 
 
 Usage
