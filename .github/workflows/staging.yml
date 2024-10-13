@@ -21,10 +21,29 @@ jobs:
           docker build -t mymi14s/pexels-apis-explorer:$APP_VERSION .
           docker build -t mymi14s/pexels-apis-explorer:latest .
           docker run -d --name pexels-explorer -p8000:8000 mymi14s/pexels-apis-explorer:latest
+          echo "Checking if container is running."
           if [ "$(docker container ps -q -f name=pexels-explorer)" ]; then
             echo "The container is running."
           else
             echo "The container is not running."
             exit 1
           fi
+            -
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          push: true
+          tags: mymi14s/pexels-apis-explorer:$APP_VERSION,mymi14s/pexels-apis-explorer:latest
 

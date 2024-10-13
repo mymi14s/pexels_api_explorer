@@ -23,7 +23,7 @@ app = FastAPI(
     title="Pexels API Explorer",
     description=content,
     summary="Photo and Video API for Pexels.com",
-    version="0.0.1",
+    version="0.0.2",
     terms_of_service="https://github.com/mymi14s/pexels_api_explorer",
     contact={
         "name": "Anthony Emmanuel",
