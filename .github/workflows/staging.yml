@@ -28,7 +28,7 @@ jobs:
             echo "The container is not running."
             exit 1
           fi
-            -
+          
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
